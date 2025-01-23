@@ -17,7 +17,7 @@ const loginUser = async (payload: TLoginUser) => {
   //checking if ther user is exist
   const isUserExists = await User.findOne({ email: payload?.email })
   if (!isUserExists) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Thsis user is not found !')
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
   }
 
   // checking if the password is correct

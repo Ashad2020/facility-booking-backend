@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextFunction, Request, Response } from 'express'
+import { ErrorRequestHandler } from 'express'
 import { TErrorSources } from '../interface/error'
 import config from '../config'
 import { ZodError } from 'zod'
@@ -9,12 +8,12 @@ import handleCastError from '../errors/hanndleCastError'
 import handleDuplicteError from '../errors/handleDuplicateError'
 import AppError from '../errors/AppError'
 
-export const globalErrorHandler = (
-  err: any,
-  req: Request,
-  res: Response,
+export const globalErrorHandler: ErrorRequestHandler = (
+  err,
+  req,
+  res,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction
+  next
 ) => {
   let statusCode = 500
   let message = 'something went wrong'
@@ -64,10 +63,11 @@ export const globalErrorHandler = (
       },
     ]
   }
-  return res.status(statusCode).json({
+  res.status(statusCode).json({
     success: false,
     message,
     errorMessages,
     stack: config.NODE_ENV === 'development' ? err?.stack : null,
   })
+  return
 }
