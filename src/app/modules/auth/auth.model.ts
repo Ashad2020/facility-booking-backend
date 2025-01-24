@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { model, Schema } from 'mongoose'
 import { TUser } from './auth.interface'
 import config from '../../config'
@@ -37,6 +36,7 @@ const userSchema = new Schema<TUser>(
   }
 )
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
     this.password,
